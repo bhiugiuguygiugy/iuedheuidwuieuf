@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REBUILD UKRAINE | Official Portal</title>
+    <style>
+        :root { --ua-yellow: #f8ff13; --bg: #0a0a0a; --card: #141414; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; margin: 0; line-height: 1.6; }
+        nav { padding: 30px; border-bottom: 1px solid #222; display: flex; gap: 40px; justify-content: center; background: var(--bg); position: sticky; top: 0; z-index: 100; }
+        nav a { color: #888; text-decoration: none; font-weight: bold; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        nav a:hover, nav a.active { color: var(--ua-yellow); }
+        
+        .hero { max-width: 1100px; margin: 80px auto; padding: 0 40px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+        h1 { font-size: 72px; font-weight: 900; line-height: 0.9; margin: 0; letter-spacing: -3px; }
+        .hero p { font-size: 18px; color: #888; margin: 30px 0; max-width: 450px; }
+
+        .donation-card { background: var(--card); border: 1px solid #222; padding: 40px; border-radius: 4px; }
+        .goal-box { margin-bottom: 30px; }
+        .goal-header { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; color: #555; }
+        .progress-bg { background: #000; height: 8px; border-radius: 4px; overflow: hidden; }
+        .progress-fill { background: var(--ua-yellow); width: 12%; height: 100%; }
+
+        select { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 18px; font-size: 16px; margin-bottom: 15px; border-radius: 4px; outline: none; }
+        .btn-pay { background: var(--ua-yellow); color: black; border: none; padding: 20px; width: 100%; font-size: 18px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        .btn-pay:hover { filter: brightness(1.1); }
+        .btn-copy { background: transparent; color: #555; border: none; width: 100%; margin-top: 15px; cursor: pointer; font-size: 12px; text-transform: uppercase; font-weight: bold; }
+        .btn-copy:hover { color: white; }
+
+        .transparency-footer { max-width: 1100px; margin: 60px auto; padding: 40px; border-top: 1px solid #222; color: #444; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="active">Home</a>
+    <a href="how-we-help.html">How We Help</a>
+    <a href="index.html#donate">Support</a>
+</nav>
+
+<div class="hero">
+    <div>
+        <h1>REBUILD<br>UKRAINE.</h1>
+        <p>A direct-to-impact initiative providing critical materials for housing reconstruction and infrastructure repair.</p>
+        <div style="font-size: 14px; color: var(--ua-yellow); font-weight: bold;">90% DIRECT IMPACT RATIO</div>
+    </div>
+
+    <div class="donation-card" id="donate">
+        <div class="goal-box">
+            <div class="goal-header"><span>Current Goal</span><span>€10,000</span></div>
+            <div class="progress-bg"><div class="progress-fill"></div></div>
+        </div>
+
+        <label style="display:block; font-size:11px; color:#555; margin-bottom:8px; font-weight:bold; text-transform:uppercase;">Select Network</label>
+        <select id="network">
+            <option value="0x01D82c80966BA44356D7ef629864423DFB14cf6e">Ethereum / Linea / Base / Arbitrum</option>
+            <option value="bc1qhg875d67navphfx7xdg8fzf7jy3d67tkt9952t">Bitcoin (BTC)</option>
+            <option value="XLchbpt2DNG9NKy35RetrjTeZ8PgoA13rSQMsvSEpTj">Solana (SOL)</option>
+            
+        </select>
+
+        <button class="btn-pay" onclick="doPayment()">Pay €1 with MetaMask</button>
+        <button class="btn-copy" onclick="doCopy()">Copy Address Instead</button>
+        <div id="status" style="margin-top:10px; font-size:12px; color:var(--ua-yellow); text-align:center;"></div>
+    </div>
+</div>
+
+<div class="transparency-footer">
+    90% of all contributions are allocated directly to reconstruction efforts. 10% is retained for technical maintenance and platform growth. All transactions are verifiable on the public ledger.
+</div>
+
+<script>
+    function doPayment() {
+        const addr = document.getElementById('network').value;
+        if (addr.startsWith("0x")) {
+            const wei = "350000000000000"; 
+            window.open(`https://metamask.app.link/send/${addr}?value=${wei}`, '_blank');
+        } else {
+            alert("For Bitcoin/Solana, please use 'Copy Address' and paste it into your wallet app.");
+        }
+    }
+
+    function doCopy() {
+        const addr = document.getElementById('network').value;
+        navigator.clipboard.writeText(addr);
+        document.getElementById('status').innerText = "ADDRESS COPIED";
+        setTimeout(() => { document.getElementById('status').innerText = ""; }, 3000);
+    }
+</script>
+
+</body>
+</html>
